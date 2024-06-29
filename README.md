@@ -16,6 +16,10 @@ Este proyecto es una aplicación Flutter que gestiona artículos. Incluye funcio
 
 - Se integraron test en Flutter, se encuentran en la carpeta de test y pueden ser ejecutados con 'flutter test'
 
+- ESTA APLICACION SE PROBO EN UN DISPOSITIVO VIRTUAL PIXEL 6 PRO
+
+- Para correr el proyecto de flutter ubiquese en lib/main.dart y ejecute el archivo, o use flutter run
+
 ## Tecnologías Utilizadas
 - **Flutter**: Framework para construir aplicaciones multiplataforma.
 - **Dart**: Lenguaje de programación usado con Flutter.
