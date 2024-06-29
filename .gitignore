@@ -1,0 +1,5 @@
+# Ignorar node_modules en la carpeta neoforemostapi
+neoforemostapi/node_modules/
+
+# Ignorar archivos .env en la carpeta neoforemostapi
+neoforemostapi/.env
