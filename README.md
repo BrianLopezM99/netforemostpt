@@ -11,6 +11,7 @@ Este proyecto es una aplicación Flutter que gestiona artículos. Incluye funcio
 - Uso de TypeScript para asegurar tipos estáticos durante el desarrollo.
 - Integración con MongoDB Atlas para almacenamiento de datos.
 - la url de Mongo es la siguiente (al ser una prueba es mas practico ponerlo aqui) : mongodb+srv://brianlopezmedina12:dsg4LEX3N9Pp4t2v@clusternetforemostpt.yanr1vb.mongodb.net/?appName=ClusterNetForemostPT
+- Utilice 'npm i' para instalar las dependencias necesarias
 
 - Para correr el proyecto en flutter debe configurar el archivo 'common.dart' ubicado en lib/config y tener el API corriendo en su maquina 'npm run dev' (especificar puerto a utilizar en el .env que debe ser creado)
 
