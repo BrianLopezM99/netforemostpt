@@ -20,45 +20,57 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    homeBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Articles DEMO By Brian Lopez 🚀")),
-      body: BlocConsumer<HomeBloc, HomeState>(
-        listenWhen: (previous, current) => current is HomeInitial,
-        buildWhen: (previous, current) => current is! HomeInitial,
-        bloc: homeBloc,
-        listener: (context, state) {
-          if (state is HomeErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is HomeInitial) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is HomeLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is HomeLoadedState) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                homeBloc.add(HomeInitialEvent());
-                await Future.delayed(
-                    const Duration(seconds: 2)); // Simular carga demorada
+      body: Column(
+        children: [
+          Expanded(
+            child: BlocConsumer<HomeBloc, HomeState>(
+              listenWhen: (previous, current) => current is HomeInitial,
+              buildWhen: (previous, current) => current is! HomeInitial,
+              bloc: homeBloc,
+              listener: (context, state) {
+                if (state is HomeErrorState) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message)),
+                  );
+                }
               },
-              child: ListView.builder(
-                itemCount: state.articles.length,
-                itemBuilder: (context, index) {
-                  return ArticleCard(article: state.articles[index]);
-                },
-              ),
-            );
-          } else if (state is HomeErrorState) {
-            return Center(child: Text(state.message));
-          } else {
-            return const Center(child: Text("Unknown state"));
-          }
-        },
+              builder: (context, state) {
+                if (state is HomeInitial) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is HomeLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is HomeLoadedState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      homeBloc.add(HomeInitialEvent());
+                      await Future.delayed(
+                          const Duration(seconds: 2)); // Simular carga demorada
+                    },
+                    child: ListView.builder(
+                      itemCount: state.articles.length,
+                      itemBuilder: (context, index) {
+                        return ArticleCard(article: state.articles[index]);
+                      },
+                    ),
+                  );
+                } else if (state is HomeErrorState) {
+                  return Center(child: Text(state.message));
+                } else {
+                  return const Center(child: Text("Unknown state"));
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

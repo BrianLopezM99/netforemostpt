@@ -11,22 +11,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeInitialEvent>(homeInitialEvent);
   }
 
-  FutureOr<void> homeInitialEvent(
+  Future<void> homeInitialEvent(
       HomeInitialEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
-    final response = await HomeController().fetchArticles();
-    if (kDebugMode) {
-      print(response);
-    }
 
     try {
-      emit(HomeLoadedState(articles: response));
-    } catch (e) {
-      emit(HomeErrorState(message: 'error test'));
-    }
+      final response = await HomeController().fetchArticles();
 
-    if (kDebugMode) {
-      print("homeInitialEvent $response");
+      if (response.isEmpty) {
+        emit(HomeErrorState(message: 'No se encontraron artículos'));
+      } else {
+        emit(HomeLoadedState(articles: response));
+      }
+
+      if (kDebugMode) {
+        print("homeInitialEvent $response");
+      }
+    } on Exception catch (e) {
+      emit(HomeErrorState(message: 'Error al cargar artículos: $e'));
     }
   }
 }

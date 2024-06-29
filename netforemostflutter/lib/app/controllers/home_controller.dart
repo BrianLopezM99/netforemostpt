@@ -25,13 +25,23 @@ class HomeController {
         if (kDebugMode) {
           print('Failed to load articles');
         }
-        throw Exception('Failed to load articles');
+        // Devuelve una lista vacía o maneja el error según tus necesidades
+        return [];
       }
+    } on http.ClientException catch (e) {
+      // Captura específicamente excepciones de cliente HTTP
+      if (kDebugMode) {
+        print('HTTP Client Exception: $e');
+      }
+      // Devuelve una lista vacía o maneja el error según tus necesidades
+      return [];
     } catch (e) {
+      // Captura cualquier otra excepción
       if (kDebugMode) {
         print('Error: $e');
       }
-      throw Exception('Failed to load articles');
+      // Devuelve una lista vacía o maneja el error según tus necesidades
+      return [];
     }
   }
 }
